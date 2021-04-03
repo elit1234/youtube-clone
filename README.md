@@ -6,3 +6,5 @@
 * Basic layout setup
 
 
+# Next:
+* Setup login and signup page
