@@ -8,7 +8,9 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     font-size: 1.15em;
-    width: 90%;
+    @media (min-width: 1001px) {
+        width: 90%;
+    }
     height: 50px;
     background: ${props => props.active ? `#383838` : `#212121`};
     &:hover {
@@ -22,6 +24,12 @@ const Container = styled.div`
 const IconWrapper = styled.div`
     width: 20%;
 `
+
+const IconText = styled.div`
+    @media (max-width: 1000px) {
+        display: none;
+    }
+`;
 
 const Option = (props) => {
     const history = useHistory();
@@ -44,7 +52,9 @@ const Option = (props) => {
             <IconWrapper>
                 {props.name && getIcon(props.name)}
             </IconWrapper>
-            {props.name}
+            <IconText>
+                {props.name}
+            </IconText>
         </Container>
     )
 }

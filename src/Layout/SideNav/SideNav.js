@@ -6,19 +6,22 @@ import { useLocation } from "react-router-dom";
 import Option from './Option';
 
 const Container = styled(motion.div)`
-    width: ${props => props.showSide ? `300px` : `0%`};
+    @media (min-width: 1001px) {
+        width: ${props => props.showSide ? `300px` : `0%`};
+    }
+    @media (max-width: 1000px) {
+        width: ${props => props.showSide ? `150px` : `0%`};
+    }
     transition: 1s;
-    background: #252525;
 `;
 
 const Hr = styled.hr`
-
+    margin: 1.5em 0;
 `;
 
 const SideNav = () => {
     const loc = useLocation();
     const showSide = useSelector((state) => state.user.showSide)
-    const user = useSelector((state) => state.user)
     const variants = {
         open: {
             translateX: 0,

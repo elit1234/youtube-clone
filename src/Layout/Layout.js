@@ -17,6 +17,10 @@ const Content = styled.div`
     display: flex;
 `
 
+const PropContent = styled.div`
+    padding: 0.5em;
+`
+
 const Layout = (props) => {
 
     const loc = useLocation();
@@ -34,7 +38,9 @@ const Layout = (props) => {
             <TopNav />
             <Content>
                 <SideNav />
-                {props.children}
+                <PropContent>
+                    {props.children}
+                </PropContent>
             </Content>
         </Container>
     )

@@ -62,9 +62,7 @@ const Center = () => {
                 <SearchWrapper>
                     <Input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search" onKeyPress={(key) => {
                         if(key.key === 'Enter') {
-                            if(query && query.length > 0) {
-                                let url = `/search/${query}`;
-                                
+                            if(query && query.length > 0) {                                
                             }
                         }   
                     }}/>
