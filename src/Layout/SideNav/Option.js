@@ -10,7 +10,7 @@ const Container = styled.div`
     font-size: 1.15em;
     width: 90%;
     height: 50px;
-    background: #212121;
+    background: ${props => props.active ? `#383838` : `#212121`};
     &:hover {
         background: #383838;
     }
@@ -38,7 +38,7 @@ const Option = (props) => {
     }
 
     return (
-        <Container onClick={() => {
+        <Container active={props.active ? 1 : 0} onClick={() => {
             if(props.to) history.push(props.to)
         }}>
             <IconWrapper>
