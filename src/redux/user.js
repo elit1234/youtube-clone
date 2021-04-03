@@ -3,9 +3,12 @@ const TRY_SIGN_IN = "redux/users/TRY_SIGN_IN";
 const SET_USER = "redux/users/SET_USER";
 const SIGN_OUT = "redux/users/SIGN_OUT";
 
+const SHOW_NAV = "redux/users/SHOW_NAV";
+const HIDE_NAV = "redux/users/HIDE_NAV";
+
 const initialState = {
     username: '',
-    sideNav: true,
+    showSide: true,
     loading: false
 }
 
@@ -27,6 +30,19 @@ const currentUser = (state = initialState, action) => {
         }
         case SIGN_OUT: {
             return initialState;
+        }
+
+        case SHOW_NAV: {
+            return {
+                ...state,
+                showSide: true
+            }
+        }
+        case HIDE_NAV: {
+            return {
+                ...state,
+                showSide: false
+            }
         }
         default:
             return state;
@@ -60,7 +76,21 @@ const signOut = () => {
     }
 }
 
+const showNav = () => {
+    return {
+        type: SHOW_NAV
+    }
+}
+
+const hideNav = () => {
+    return {
+        type: HIDE_NAV
+    }
+}
+
 export const actions = {
     trySignIn,
-    signOut
+    signOut,
+    showNav,
+    hideNav
 }
