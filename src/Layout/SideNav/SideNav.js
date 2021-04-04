@@ -11,10 +11,6 @@ const Container = styled(motion.div)`
     width: ${(props) => (props.showSide ? "300px" : "0%")};
   }
   @media (max-width: 1000px) {
-    width: ${(props) =>
-      props.showSide ? (props.forceSide ? "300px" : "150px") : "0%"};
-  }
-  @media (max-width: 600px) {
     min-width: ${(props) => (props.showSide ? `100vw` : "0%")};
   }
   transition: 1s;
@@ -38,6 +34,7 @@ const SideNav = () => {
   const showSide = useSelector((state) => state.user.showSide);
   const forceSide = useSelector((state) => state.user.forceSide);
   const loggedIn = useSelector((state) => state.user.email);
+  const isAdmin = useSelector((state) => state.user.admin);
   const subscriptions = useSelector((state) => state.user.subscriptions);
 
   const variants = {
@@ -97,11 +94,20 @@ const SideNav = () => {
   useEffect(() => {
     setOptions(staticOptions);
     if (loggedIn) {
-      const newOptions = [
-        {
-          subTitle: "My Subscriptions",
-        },
-      ];
+      let newOptions = [];
+      if (isAdmin)
+        newOptions.push(
+          {
+            name: "Admin",
+            to: "/admin",
+          },
+          {
+            hr: true,
+          }
+        );
+      newOptions.push({
+        subTitle: "My Subscriptions",
+      });
       subscriptions &&
         subscriptions.map((sub, key) => {
           newOptions.push({
@@ -110,6 +116,7 @@ const SideNav = () => {
             to: sub.to,
           });
         });
+
       const newObj = [...staticOptions, ...newOptions];
       setOptions(newObj);
     }

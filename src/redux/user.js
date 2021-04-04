@@ -13,7 +13,9 @@ const SHRINK_NAV = "redux/users/SHRINK_NAV";
 const LARGE_NAV = "redux/users/LARGE_NAV";
 
 const initialState = {
-  username: "",
+  name: null,
+  email: null,
+  admin: 0,
   showSide: true,
   forceSide: true,
   loading: false,
@@ -46,7 +48,9 @@ const currentUser = (state = initialState, action) => {
     case SET_USER: {
       return {
         ...state,
-        email: action.payload.email ? action.payload.email : "Error",
+        email: action.payload.email ? action.payload.email : null,
+        name: action.payload.name ? action.payload.name : null,
+        admin: action.payload.admin ? action.payload.admin : 0,
         loading: false,
       };
     }
@@ -142,6 +146,8 @@ const trySignIn = ({ email, password }) => (dispatch) => {
         dispatch(
           setUser({
             email,
+            name: response.data.name ? response.data.name : null,
+            admin: response.data.admin ? response.data.admin : 0,
           })
         );
       } else Notify("Something went wrong");

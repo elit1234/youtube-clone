@@ -7,6 +7,12 @@ const Account = () => {
   const user = useSelector((state) => state.user);
   const history = useHistory();
 
+  let pageTitle = user.name
+    ? `${user.name}'s account`
+    : user.email
+    ? `${user.email}'s account`
+    : "Your Account";
+
   useEffect(() => {
     if (!user.email) {
       history.push("/login");
@@ -14,10 +20,7 @@ const Account = () => {
   }, []);
   return (
     <Layout>
-      <h1>
-        {user.name ? user.name : user.email ? user.email : "Your Account"} 's
-        account
-      </h1>
+      <h1>{pageTitle}</h1>
     </Layout>
   );
 };

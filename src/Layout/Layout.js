@@ -3,6 +3,7 @@ import SideNav from "./SideNav/SideNav";
 import TopNav from "./TopNav/TopNav";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   background: #212121;
@@ -17,19 +18,27 @@ const Container = styled.div`
 const Content = styled.div`
   height: 92vh;
   min-width: 100vw;
-  max-width: 100%;
-  width: 100vw;
+  max-width: 100vw;
+  width: 100%;
   display: flex;
   overflow-x: hidden;
 `;
 
 const PropContent = styled.div`
   padding: 0.5em;
-  width: 100%;
+  width: ${(props) => (props.showSide ? `100%` : `0%`)};
+  ${(props) =>
+    !props.showSide &&
+    `
+    min-width: 100%;
+  `}
+  transition: 1s;
 `;
 
 const Layout = (props) => {
   const loc = useLocation();
+  const user = useSelector((state) => state.user);
+  const showSide = user.showSide;
 
   useEffect(() => {
     let pageTitle = "Home - Eli Tube";
@@ -38,6 +47,11 @@ const Layout = (props) => {
       pageTitle = "Subscriptions - Eli Tube";
     else if (loc.pathname.startsWith("/library"))
       pageTitle = "Library - Eli Tube";
+    else if (loc.pathname.startsWith("/admin")) pageTitle = "Admin - Eli Tube";
+    else if (loc.pathname.startsWith("/account"))
+      pageTitle = `${
+        user.name ? `${user.name}'s Account` : "Account - "
+      } - Eli Tube`;
     document.title = pageTitle;
   }, [loc.pathname]);
 
@@ -46,7 +60,7 @@ const Layout = (props) => {
       <TopNav />
       <Content>
         <SideNav />
-        <PropContent>{props.children}</PropContent>
+        <PropContent showSide={showSide ? 1 : 0}>{props.children}</PropContent>
       </Content>
     </Container>
   );
