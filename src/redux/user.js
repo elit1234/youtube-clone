@@ -2,7 +2,8 @@ import Notify from "../Notify";
 import axios from "axios";
 import ENDPOINT from "../ENDPOINT";
 
-const TRY_SIGN_IN = "redux/users/TRY_SIGN_IN";
+const SET_LOADING = "redux/users/SET_LOADING";
+const STOP_LOADING = "redux/users/STOP_LOADING";
 const SET_USER = "redux/users/SET_USER";
 const SIGN_OUT = "redux/users/SIGN_OUT";
 
@@ -16,14 +17,30 @@ const initialState = {
   showSide: true,
   forceSide: true,
   loading: false,
+  subscriptions: [
+    {
+      name: "Linus Tech Tips",
+      to: "linustechtips",
+    },
+    {
+      name: "Ben Awad",
+      to: "benawad",
+    },
+  ],
 };
 
 const currentUser = (state = initialState, action) => {
   switch (action.type) {
-    case TRY_SIGN_IN: {
+    case SET_LOADING: {
       return {
         ...state,
         loading: true,
+      };
+    }
+    case STOP_LOADING: {
+      return {
+        ...state,
+        loading: false,
       };
     }
     case SET_USER: {
@@ -73,8 +90,41 @@ const setUser = (userObj) => ({
   payload: userObj,
 });
 
+const trySignUp = ({ email, name, password }) => (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+  });
+  const sendSignup = async () => {
+    let query = await axios({
+      method: "POST",
+      url: `${ENDPOINT}/account/signup`,
+      data: {
+        email,
+        name,
+        password,
+      },
+    });
+    let response = await query.data;
+    if (response) {
+      if (response.success) {
+        Notify("You have successfully signed up. Please login");
+      } else {
+        Notify(response.message ? response.message : "Something went wrong");
+      }
+    } else Notify("Something went wrong");
+    dispatch({
+      type: STOP_LOADING,
+    });
+  };
+
+  sendSignup();
+};
+
 // eslint-disable-next-line no-unused-vars
 const trySignIn = ({ email, password }) => (dispatch) => {
+  dispatch({
+    type: SET_LOADING,
+  });
   const sendLogin = async () => {
     let query = await axios({
       method: "POST",
@@ -89,17 +139,16 @@ const trySignIn = ({ email, password }) => (dispatch) => {
     if (response) {
       if (response.success) {
         Notify("Welcome, " + email);
-        dispatch({
-          type: TRY_SIGN_IN,
-        });
         dispatch(
           setUser({
             email,
           })
         );
       } else Notify("Something went wrong");
-    }
-    console.log(response);
+    } else Notify("Something went wrong");
+    dispatch({
+      type: STOP_LOADING,
+    });
   };
 
   sendLogin();
@@ -132,4 +181,5 @@ export const actions = {
   hideNav,
   largeNav,
   shrinkNav,
+  trySignUp,
 };

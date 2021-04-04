@@ -9,6 +9,7 @@ const Library = React.lazy(() => import("./Views/Library"));
 const Login = React.lazy(() => import("./Views/Login"));
 const Account = React.lazy(() => import("./Views/Account"));
 const Logout = React.lazy(() => import("./Views/Logout"));
+const Channel = React.lazy(() => import("./Views/Channel"));
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/login" exact component={Login} />
         <Route path="/account" exact component={Account} />
         <Route path="/logout" exact component={Logout} />
+        <Route path="/channel/:channelid" exact component={Channel} />
       </Suspense>
     </Router>
   );

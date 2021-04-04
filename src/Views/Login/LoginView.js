@@ -12,7 +12,7 @@ const Content = styled(motion.div)`
   height: ${(props) => (props.show ? "100%" : "0%")};
   display: flex;
   flex-direction: column;
-  transition: width 1s;
+  transition: width 2s;
   align-items: center;
   padding-top: 1em;
   justify-content: space-evenly;
@@ -34,6 +34,7 @@ const LoginView = (props) => {
         translateX: {
           duration: 1,
           type: "spring",
+          duration: 2,
         },
       },
     },
@@ -43,6 +44,7 @@ const LoginView = (props) => {
         translateX: {
           duration: 1,
           type: "spring",
+          duration: 2,
         },
       },
     },
