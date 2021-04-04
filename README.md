@@ -4,7 +4,8 @@
 
 - Simple Redux user object (sign in/sign out)
 - Basic layout setup
+- Setup login and signup routes/responses
 
 # Next:
 
-- Setup login and signup page
+- Setup admin page to manage existing users
