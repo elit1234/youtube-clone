@@ -1,12 +1,12 @@
-import React from 'react'
-import Layout from '../../Layout/Layout'
+import React from "react";
+const Layout = React.lazy(() => import("../../Layout/Layout"));
 
 const Explore = () => {
-    return (
-        <Layout>
-            <h1>Explore</h1>
-        </Layout>
-    )
-}
+  return (
+    <Layout>
+      <h1>Explore</h1>
+    </Layout>
+  );
+};
 
-export default Explore
+export default Explore;

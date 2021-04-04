@@ -2,9 +2,9 @@
 
 # Done:
 
-* Simple Redux user object (sign in/sign out)
-* Basic layout setup
-
+- Simple Redux user object (sign in/sign out)
+- Basic layout setup
 
 # Next:
-* Setup login and signup page
+
+- Setup login and signup page
